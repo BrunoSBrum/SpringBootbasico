@@ -1,0 +1,194 @@
+openapi: 3.0.1
+info:
+  title: API de SpringBoot
+  description: API para fazer testes simples utilizando springboot e java
+    na IDE Eclipse.
+  version: 0.0.1
+  termsOfService: httos://localhost:8080/api/states
+  contact:
+    name: Bruno Brum
+    email: Bruno.brum@compasso.com
+    url: https://github.com/BrunoSBrum
+    
+externalDocs:
+  description: Documentação burocrática
+  url: httos://localhost:8080/api/states
+
+paths:
+  /states/:
+    get:
+      summary: Buscar, listar e paginar os itens do banco da dados.
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Estado"
+                  type: object
+                properties:
+                  id:
+                    type: Long
+                  nome:
+                    type: string
+                  capital:
+                    type: string
+                  regiao:
+                    type: string
+                  populacao:
+                    type: Long
+                  area:
+                    type: Long
+
+    post:
+      summary: Cria novo item no banco de dados
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nome:
+                  type: string
+                capital:
+                  type: string
+                regiao:
+                  type: string
+                populacao:
+                  type: Long
+                area:
+                  type: Long
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estado"
+                type: object
+                properties:
+                  nome:
+                    type: string
+                  capital:
+                    type: string
+                  regiao:
+                   type: string
+                  populacao:
+                    type: Long
+                  area:
+                    type: Long 
+                  
+            
+        
+  /states/{id}:
+    get:
+      summary: Filtra item do banco de dados pelo ID
+      parameters: 
+      - name: id
+        in: path
+        schema:
+          type: Long
+        required: true
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Estado"
+                type: object
+                properties:
+                  id:
+                    type: Long
+                  nome:
+                    type: string
+                  capital:
+                    type: string
+                  regiao:
+                    type: string
+                  populacao:
+                    type: Long
+                  area:
+                    type: Long
+        404:
+          description: ID não encontrado
+          content:
+            application/json:
+              example: "Not Found"
+    delete:
+      summary: Apagar item especifico do banco de dados
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: object
+          properties:
+            nome:
+              type: string
+            capital:
+              type: string
+            regiao:
+              type: string
+            populacao:
+              type: Long
+            area:
+              type: Long
+        required:  true
+      responses:
+        200:
+          description: Sucesso
+        404:
+          description: Item não encontrado
+    put:
+      summary: Sobrescrever/atualizar itens no banco de dados
+      parameters: 
+      - name: id
+        in: path
+        schema:
+          type: object
+          properties:
+            nome:
+             type: string
+            capital:
+              type: string
+            regiao:
+             type: string
+            populacao:
+                type: Long
+            area:
+                type: Long
+        required:  true
+      responses:
+        200:
+          description: Sucesso
+        400:
+          description: erro BadResquest
+        404:
+          description: Item não encontrado
+security: 
+- auth: []
+                            
+components:
+  schemas:
+    Estado:
+      type: string
+      properties:
+        id:
+          type: Long
+        nome:
+          type: string
+        capital:
+          type: string
+        regiao:
+          type: string
+        populacao:
+          type: Long
+        area:
+          type: Long
+          
+          
+        
+      
+      
